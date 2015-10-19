@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <taskdef resource="net/sf/antcontrib/antlib.xml"/>
+  <exec outputproperty="gitOutput" resultproperty="gitExitCode" executable="git" failonerror="false" failifexecutionfails="false">
+    <arg value="log"/>
+    <arg value="-1"/>
+    <arg value="--format=format:%h"/>
+  </exec>
+  <if>
+    <equals arg2="0" arg1="${gitExitCode}"/>
+    <then>
+      <property name="buildNumber" value="${gitOutput}"/>
+    </then>
+    <else>
+      <property name="buildNumber" value="unknown"/>
+    </else>
+  </if>
+  <echo>Build number: ${buildNumber}</echo>
+  <mkdir dir="D:\whg\learning\netty-3.2.5.Final\target"/>
+  <echo message="3.2.5.Final" file="D:\whg\learning\netty-3.2.5.Final\target/version.txt"/>
+  <echo message="// DO NOT MODIFY - WILL BE OVERWRITTEN DURING THE BUILD PROCESS&#10;package org.jboss.netty.util;&#10;/**&#10; * Provides the version information of Netty.&#10; * @apiviz.landmark&#10; */&#10;public final class Version {&#10; /** The version identifier. */&#10; public static final String ID = &quot;3.2.5.Final-${buildNumber}&quot;;&#10; /** Prints out the version identifier to stdout. */&#10; public static void main(String[] args) { System.out.println(ID); }&#10; private Version() { super(); }&#10;}&#10;" file="D:\whg\learning\netty-3.2.5.Final/src/main/java/org/jboss/netty/util/Version.java"/>
+</target>
+</project>
